@@ -1,51 +1,126 @@
-# Portfolio professionnel – Socle de départ
+# Portfolio professionnel avec génération de CV
 
-Stack : React (Vite) · Express · TypeScript · PostgreSQL · Redis · Docker
+Application web permettant de créer et de gérer un portfolio professionnel et de générer un CV au format PDF à partir des informations enregistrées.
 
-## Démarrage
+## Technologies utilisées
+
+- React avec Vite
+- TypeScript
+- Node.js et Express
+- PostgreSQL
+- Redis
+- Docker et Docker Compose
+- PDFKit pour la génération des CV en PDF
+
+## Fonctionnalités
+
+### Authentification
+- Création d'un compte.
+- Connexion et déconnexion.
+- Protection des routes privées.
+- Mots de passe sécurisés avec bcrypt.
+- Gestion des sessions avec Redis.
+
+### Gestion du portfolio
+- Modification du profil professionnel.
+- Ajout, modification et suppression des expériences professionnelles.
+- Gestion des formations.
+- Gestion des compétences.
+- Gestion des projets.
+
+### Portfolio public
+- Création d'une adresse publique avec un identifiant unique.
+- Activation ou désactivation de la visibilité du portfolio.
+- Affichage des informations professionnelles.
+- Mise en cache des données publiques avec Redis.
+
+### Génération du CV
+- Génération d'un CV au format PDF.
+- Deux modèles disponibles : classique et moderne.
+- Prévisualisation du CV.
+- Téléchargement du CV.
+
+## Prérequis
+
+Avant de démarrer le projet, il faut installer :
+
+- Node.js
+- Docker Desktop
+- Docker Compose
+
+## Installation et démarrage
+
+1. Cloner ou télécharger le projet.
+2. Ouvrir le dossier du projet dans un terminal.
+3. Créer le fichier `.env` à partir de `.env.example`.
+4. Configurer les variables d'environnement.
+5. Démarrer les services avec la commande :
 
 ```bash
-cp .env.example .env     # puis modifier les mots de passe
 docker compose up --build
 ```
 
+## Accès à l'application
+
 - Frontend : http://localhost:5173
-- API (santé) : http://localhost:3000/api/health
-- Portfolio de démo (API) : http://localhost:3000/api/public/demo-etudiant
-- PostgreSQL : localhost:5432 — Redis : localhost:6379
+- API : http://localhost:3000
+- Vérification de l'API : http://localhost:3000/api/health
+- Portfolio de démonstration : http://localhost:3000/api/public/demo-etudiant
 
-## Structure
+## Structure du projet
 
-```
-.
+```text
+portfolio-starter/
+├── backend/
+│   ├── db/
+│   │   └── init.sql
+│   └── src/
+│       ├── routes/
+│       ├── index.ts
+│       └── db.ts
+├── frontend/
+│   └── src/
+├── docs/
+│   └── API.md
 ├── docker-compose.yml
 ├── .env.example
-├── backend/
-│   ├── Dockerfile
-│   ├── db/init.sql          # schéma initial + données de démo
-│   └── src/
-│       ├── index.ts         # point d'entrée Express
-│       ├── db.ts            # pool PostgreSQL
-│       ├── redis.ts         # client Redis
-│       └── routes/          # health, public (cache Redis), cv (à implémenter)
-└── frontend/
-    ├── Dockerfile
-    └── src/                 # React + Router
+└── README.md
 ```
 
-## À réaliser par les étudiants
+## Documentation
 
-Voir le cahier des charges : authentification, CRUD du contenu, portfolio public,
-**génération du CV en PDF**, tests, documentation.
+La documentation des routes de l'API est disponible dans le dossier `docs`, dans le fichier `API.md`.
 
 ## Commandes utiles
 
+Arrêter les conteneurs :
+
 ```bash
-docker compose down -v                      # tout arrêter et supprimer les volumes (réinitialise la BD)
-docker compose exec postgres psql -U portfolio -d portfolio
-docker compose exec redis redis-cli
+docker compose down
+```
+
+Afficher les journaux du backend :
+
+```bash
 docker compose logs -f backend
 ```
 
-> Note : `init.sql` ne s'exécute qu'à la première création du volume PostgreSQL.
-> Après modification du schéma, utiliser `docker compose down -v`.
+Accéder à PostgreSQL :
+
+```bash
+docker compose exec postgres psql -U portfolio -d portfolio
+```
+
+Accéder à Redis :
+
+```bash
+docker compose exec redis redis-cli
+```
+
+Pour réinitialiser complètement la base de données et supprimer les volumes :
+
+```bash
+docker compose down -v
+```
+
+**Attention :** cette dernière commande supprime les données enregistrées dans les volumes PostgreSQL.

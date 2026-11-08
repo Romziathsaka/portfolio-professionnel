@@ -1400,11 +1400,25 @@ export default function Dashboard() {
                 ))
             )}
 
-            
+
             <section style={styles.card}>
                 <h2>Générer mon CV</h2>
 
-                <p>Choisissez le modèle de CV que vous souhaitez télécharger.</p>
+                <p>Choisissez le modèle de CV que vous souhaitez consulter ou télécharger.</p>
+
+                <a
+                    href={`${API_URL}/api/cv/preview?template=classic`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                        ...styles.button,
+                        display: "block",
+                        textAlign: "center",
+                        marginBottom: "15px"
+                    }}
+                >
+                    Aperçu du CV classique
+                </a>
 
                 <a
                     href={`${API_URL}/api/cv/download?template=classic`}
@@ -1413,11 +1427,25 @@ export default function Dashboard() {
                     style={{
                         ...styles.button,
                         display: "block",
-                        marginBottom: "15px",
-                        textAlign: "center"
+                        textAlign: "center",
+                        marginBottom: "15px"
                     }}
                 >
                     Télécharger le CV classique
+                </a>
+
+                <a
+                    href={`${API_URL}/api/cv/preview?template=modern`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                        ...styles.button,
+                        display: "block",
+                        textAlign: "center",
+                        marginBottom: "15px"
+                    }}
+                >
+                    Aperçu du CV moderne
                 </a>
 
                 <a
